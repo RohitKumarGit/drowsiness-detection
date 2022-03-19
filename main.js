@@ -1,7 +1,7 @@
-import "./style.css";
 const webcamElement = document.getElementById("webcam");
 const predict = async function (image) {
   console.log(tf.image.resizeBilinear(image, [145, 145]));
+  console.log(window.model);
   if (window.model) {
     const resized = tf.image.resizeBilinear(image, [145, 145]);
 
@@ -13,17 +13,21 @@ const predict = async function (image) {
 
       .then((scores) => {
         scores = scores[0];
+        console.log(scores);
         let predicted = scores.indexOf(Math.max(...scores));
         //console.log(predicted);
         const classes = ["yawn", "no_yawn", "Closed", "Open"];
         const label = classes[predicted];
         console.log(label);
-        document.getElementById("app").innerHTML = label;
+        document.getElementById("app").innerHTML =
+          "<i>prediction: </i>" + label;
       });
   } else {
     // The model takes a bit to load, if we are too fast, wait
-    setTimeout(function () {
-      predict(input);
+    setTimeout(async function () {
+      const webcam = await tf.data.webcam(webcamElement);
+      const img = await webcam.capture();
+      await predict(img);
     }, 50);
   }
 };
