@@ -1,7 +1,7 @@
 # Driver Drowsiness Detection
 
 Important project files :
-1. driver-drowsiness.ipynb ( contains model )
+1. driver-drowsiness-using-keras.ipynb ( contains model )
 2. main.js ( uses tensorflowJS for making predictions)
 3. drowsiness.tflite ( tflite model which we converted to )
 ## To run the project locally
